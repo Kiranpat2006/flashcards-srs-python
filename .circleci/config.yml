@@ -1,0 +1,23 @@
+
+version: 2.1
+
+jobs:
+  test:
+    docker:
+      - image: cimg/python:3.12
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+            pip install pytest
+      - run:
+          name: Run unit tests
+          command: python -m pytest test/test_schedule.py -v
+
+workflows:
+  flashcards-ci:
+    jobs:
+      - test
